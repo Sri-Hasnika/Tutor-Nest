@@ -1,0 +1,19 @@
+const exp=require('express');
+const TuteeApp=exp.Router();
+const {createTutee,tuteeDetails,tuteeDetailsById,updateTutee,deleteTutee,loginTutee}=require('../controllers/tuteeControler');
+//body parser middleware
+TuteeApp.use(exp.json())
+
+
+//create,get,update,delete a tutee(student or parent)
+TuteeApp.post('/signIn',createTutee)
+TuteeApp.get('/tutees',tuteeDetails)
+TuteeApp.get('/tutees/:id',tuteeDetailsById)
+TuteeApp.put('/update/:id',updateTutee)
+TuteeApp.delete('/delete/:id',deleteTutee)
+
+//login for tutee
+TuteeApp.post('/login',loginTutee);
+
+
+module.exports=TuteeApp;
