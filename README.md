@@ -86,7 +86,7 @@ Tutor-Nest/
 
 
 ## 📧 Contact
-For inquiries, reach out at [your-email@example.com](mailto:srihasnika@gmail.com) or visit our [GitHub Repository](https://github.com/Sri-Hasnika/Tutor-Nest).
+For inquiries, reach out at [your-srihasnika@gmail.com](mailto:srihasnika@gmail.com) or visit our [GitHub Repository](https://github.com/Sri-Hasnika/Tutor-Nest).
 
 ---
 💡 *Empowering Learning with AI-Powered Tutor Matching!* 🎓✨
