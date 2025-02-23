@@ -8,7 +8,7 @@
 - **React.js** – Dynamic and interactive UI
 - **Tailwind CSS** – Sleek and responsive design
 - **Framer Motion / GSAP** – Smooth animations
-- **Redux Toolkit** – State management
+- **Zustand** – State management
 
 ### **Backend:**
 - **Node.js & Express.js** – Scalable and secure backend
@@ -84,14 +84,9 @@ Tutor-Nest/
 - **Gamification & Leaderboards**
 - **Multi-Language Support**
 
-## 🤝 Contributing
-Contributions are welcome! Fork the repo, create a new branch, make changes, and submit a pull request.
-
-## 📜 License
-This project is licensed under the **MIT License**.
 
 ## 📧 Contact
-For inquiries, reach out at [your-email@example.com](mailto:your-email@example.com) or visit our [GitHub Repository](https://github.com/Sri-Hasnika/Tutor-Nest).
+For inquiries, reach out at [your-email@example.com](mailto:srihasnika@gmail.com) or visit our [GitHub Repository](https://github.com/Sri-Hasnika/Tutor-Nest).
 
 ---
 💡 *Empowering Learning with AI-Powered Tutor Matching!* 🎓✨
