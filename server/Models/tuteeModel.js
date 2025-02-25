@@ -100,6 +100,15 @@ password:{
 // tuteeId:{
 //     type:
 // }
+
+//reset and forgot password
+resetPasswordToken:{
+    type: String, // Stores the hashed reset token
+},
+resetPasswordExpires: {
+    type: Date, // Stores expiration time (e.g., 1 hour)
+}
+
 },{"strict":"throw"})
 
 const tutee=mongoose.model('tutee',tuteeSchema);

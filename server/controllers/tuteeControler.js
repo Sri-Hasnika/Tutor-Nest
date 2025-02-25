@@ -1,7 +1,7 @@
 const expressAsyncHandler=require('express-async-handler');
 const tutee=require('../Models/tuteeModel');
 const bcrypt=require('bcrypt');
-const {generateToken,validateTutee}=require('../utils/authUtil');
+const {generateToken,validateTutee,generateResetToken,sendResetEmail,resetPassword}=require('../utils/authUtil');
 
 
 //create a new tutee
@@ -54,7 +54,7 @@ const deleteTutee=expressAsyncHandler(async(req,res)=>{
         res.status(404).send({message:"Tutee not found"});
     }
 })
-
+//tutee login route
 const loginTutee=expressAsyncHandler(async(req,res)=>{
     const {email,password}=req.body;
     try{
@@ -73,11 +73,37 @@ const loginTutee=expressAsyncHandler(async(req,res)=>{
     }
 )
 
+// Forgot Password Route
+const forgotPassword = expressAsyncHandler(async (req, res) => {
+    const { email } = req.body;
+    try {
+        const token = await generateResetToken(email, "tutee");
+        await sendResetEmail(email, token, "tutee");
+        res.status(200).json({ message: "Password reset email sent" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Reset Password Route
+const resetPasswordHandler = expressAsyncHandler(async (req, res) => {
+    const { token, newPassword } = req.body;
+    try {
+        await resetPassword(token, newPassword);
+        res.status(200).json({ message: "Password successfully reset" });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+
 module.exports={
     createTutee,
     tuteeDetails,
     tuteeDetailsById,
     updateTutee,
     deleteTutee,
-    loginTutee
+    loginTutee,
+    forgotPassword,
+    resetPasswordHandler
 }
