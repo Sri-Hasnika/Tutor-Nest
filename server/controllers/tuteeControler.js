@@ -9,7 +9,7 @@ const createTutee=expressAsyncHandler(async(req,res)=>{
     const newTutee=req.body;
     const newTuteeObj=tutee(newTutee);
     //hash the password
-    const hashedpassword=await bcrypt.hash(Password,10);
+    const hashedpassword=await bcrypt.hash(newTuteeObj.password,10);
     newTuteeObj.password=hashedpassword;
 
     const TuteeObj=await newTuteeObj.save();

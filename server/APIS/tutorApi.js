@@ -1,6 +1,6 @@
 const exp=require('express');
 const tutorApp=exp.Router();
-const {createTutor,getTutor,getTutorById,loginTutor,updateTutor,deleteTutor}=require('../controllers/tutorController')
+const {createTutor,getTutor,getTutorById,loginTutor,updateTutor,deleteTutor,forgotPassword,resetPasswordHandler}=require('../controllers/tutorController')
 
 
 //body parser middleware
@@ -14,4 +14,9 @@ tutorApp.put('/tutor/:id',updateTutor)
 tutorApp.delete('/tutor/:id',deleteTutor)
 //login tutor route
 tutorApp.post('/tutor',loginTutor)
+
+//forgot password or reset password for tutor
+tutorApp.post('/forgot-password',forgotPassword)
+tutorApp.post('/reset-password',resetPasswordHandler)
+
 module.exports=tutorApp;

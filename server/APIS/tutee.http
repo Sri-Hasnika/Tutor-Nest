@@ -1,5 +1,5 @@
 ### Create a Tutee
-POST http://localhost:3000/api/tutees
+POST http://localhost:8000/tutee-api/signIn
 Content-Type: application/json
 
 {
@@ -18,13 +18,13 @@ Content-Type: application/json
 }
 
 ### Get All Tutees
-GET http://localhost:3000/api/tutees
+GET http://localhost:8000/tutee-api/tutees
 
 ### Get a Tutee by ID
-GET http://localhost:3000/api/tutees/64f1b2c3e4b0a1a2b3c4d5e6
+GET http://localhost:8000/tutee-api/tutees/64f1b2c3e4b0a1a2b3c4d5e6
 
 ### Update a Tutee
-PUT http://localhost:3000/api/tutees/update/64f1b2c3e4b0a1a2b3c4d5e6
+PUT http://localhost:8000/tutee-api/update/john.smith@example.com
 Content-Type: application/json
 
 {
@@ -43,50 +43,31 @@ Content-Type: application/json
 }
 
 ### Delete a Tutee
-DELETE http://localhost:3000/api/tutees/delete/64f1b2c3e4b0a1a2b3c4d5e6
-### Create a new Tutee
-POST http://localhost:3000/api/tutees
+DELETE http://localhost:8000/tutee-api/delete/64f1b2c3e4b0a1a2b3c4d5e6
+
+
+### Tutee Login
+POST http://localhost:8000/tutee-api/login
 Content-Type: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Doe",
-    "moblieNumber": 9876543210,
-    "email": "john.doe@example.com",
-    "gender": "male",
-    "studying": "10th Grade",
-    "course": "Mathematics",
-    "pincode": 560001,
-    "locality": "MG Road",
-    "city": "Bangalore",
-    "state": "Karnataka",
-    "password": "secure123"
+    "email": "srihasnika@gmail.com",
+    "password": "devendra"
 }
 
-### Get all Tutees
-GET http://localhost:3000/api/tutees
-
-### Get a Tutee by ID
-GET http://localhost:3000/api/tutees/64f1b2c3e4b0a1a2b3c4d5e6
-
-### Update a Tutee
-PUT http://localhost:3000/api/tutees/update/64f1b2c3e4b0a1a2b3c4d5e6
+### Forgot Password
+POST http://localhost:8000/tutee-api/forgot-password
 Content-Type: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Smith",
-    "moblieNumber": 9876543210,
-    "email": "john.smith@example.com",
-    "gender": "male",
-    "studying": "11th Grade",
-    "course": "Physics",
-    "pincode": 560001,
-    "locality": "MG Road",
-    "city": "Bangalore",
-    "state": "Karnataka",
-    "password": "newpassword123"
+    "email": "john.doe@example.com"
 }
 
-### Delete a Tutee
-DELETE http://localhost:3000/api/tutees/delete/64f1b2c3e4b0a1a2b3c4d5e6
+### Reset Password
+POST http://localhost:8000/tutee-api/reset-password
+Content-Type: application/json
+
+{
+    "token": "your-reset-token",
+    "newPassword": "newsecurepassword"
+}

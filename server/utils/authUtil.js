@@ -31,6 +31,7 @@ const validateTutee=async(email,password)=>{
         throw new Error('Email and password are required');
     }
     const tuteeValid=await tutee.findOne({email})
+    console.log(tuteeValid)
     if (!tuteeValid){
         throw new Error('Invalid credentials');
     }

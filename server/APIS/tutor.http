@@ -1,0 +1,90 @@
+### Create a Tutor
+POST http://localhost:8000/tutor-api/signIn
+Content-Type: application/json
+
+{
+    "firstName": "Alice",
+    "lastName": "Johnson",
+    "mobileNo": 9876543210,
+    "email": "alice.johnson@example.com",
+    "age": 30,
+    "gender": "female",
+    "courseToTeach": ["Mathematics", "Physics"],
+    "subjectsToTeach": ["Algebra", "Calculus"],
+    "qualification": "M.Sc in Mathematics",
+    "experience": 5,
+    "preferredTime": "morning",
+    "hourlyPrice": 30,
+    "tutorLocation": "Online",
+    "AboutMe": "Passionate math tutor with 5 years of experience.",
+    "resume": "alice_resume.pdf",
+    "pincode": 123456,
+    "locality": "Downtown",
+    "city": "Los Angeles",
+    "state": "CA",
+    "password": "strongpassword123",
+    "profileImage": "alice_profile.jpg"
+}
+
+### Get All Tutors
+GET http://localhost:8000/tutor-api/tutor
+
+### Get a Tutor by ID
+GET http://localhost:8000/tutor-api/tutor/67bf111efabfed3ccbc3e63b
+
+### Update a Tutor
+PUT http://localhost:8000/tutor-api/tutor/67bf111efabfed3ccbc3e63b
+Content-Type: application/json
+
+{
+    "firstName": "Alice",
+    "lastName": "Williams",
+    "mobileNo": 9876543210,
+    "email": "alice.williams@example.com",
+    "age": 32,
+    "gender": "female",
+    "courseToTeach": ["Physics"],
+    "subjectsToTeach": ["Quantum Mechanics"],
+    "qualification": "Ph.D. in Physics",
+    "experience": 6,
+    "preferredTime": "evening",
+    "hourlyPrice": 40,
+    "tutorLocation": "At Home",
+    "AboutMe": "Physics expert with a Ph.D. and 6 years of experience.",
+    "resume": "alice_resume_updated.pdf",
+    "pincode": 123456,
+    "locality": "Downtown",
+    "city": "Los Angeles",
+    "state": "CA",
+    "password": "newpassword123",
+    "profileImage": "alice_profile_updated.jpg"
+}
+
+### Delete a Tutor
+DELETE http://localhost:8000/tutor-api/tutor/67bf111efabfed3ccbc3e63b
+
+### Tutor Login
+POST http://localhost:8000/tutor-api/tutor
+Content-Type: application/json
+
+{
+    "email": "alice.johnson@example.com",
+    "password": "strongpassword123"
+}
+
+### Forgot Password
+POST http://localhost:8000/tutor-api/forgot-password
+Content-Type: application/json
+
+{
+    "email": "alice.johnson@example.com"
+}
+
+### Reset Password
+POST http://localhost:8000/tutor-api/reset-password
+Content-Type: application/json
+
+{
+    "token": "your-reset-token",
+    "newPassword": "newsecurepassword"
+}

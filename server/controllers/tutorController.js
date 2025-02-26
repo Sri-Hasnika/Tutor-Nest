@@ -1,7 +1,7 @@
 const expressAsyncHandler=require('express-async-handler');
 const tutor=require('../Models/tutorModel');
 const bcrypt=require('bcrypt');
-const {generateToken,validateTutor}=require('../utils/authUtil');
+const {generateToken,validateTutor,generateResetToken,sendResetEmail,resetPassword}=require('../utils/authUtil');
 
 
 const createTutor=expressAsyncHandler(async(req,res)=>{
@@ -12,7 +12,7 @@ const createTutor=expressAsyncHandler(async(req,res)=>{
 })
 
 const getTutor=expressAsyncHandler(async(req,res)=>{
-    const tutors=await tutee.find();
+    const tutors=await tutor.find();
     res.send({message:"all tutors",payload:tutors});
 })
 
@@ -39,10 +39,10 @@ const updateTutor=expressAsyncHandler(async(req,res)=>{
 })
 
 
-//delete tutee details
+//delete tutor details
 const deleteTutor=expressAsyncHandler(async(req,res)=>{
     const tutorId=req.params.id;
-    const updatedTutor=await tutee.findByIdAndUpdate(tutorId,req.body,{new:true});
+    const updatedTutor=await tutor.findByIdAndUpdate(tutorId,req.body,{new:true});
     if(updatedTutor){
         res.send({message:"Tutee updated",payload:updatedTutor});
     }else{
@@ -50,7 +50,7 @@ const deleteTutor=expressAsyncHandler(async(req,res)=>{
     }
 })
 
-
+//login tutor 
 const loginTutor=expressAsyncHandler(async(req,res)=>{
     const {email,password}=req.body;
     try{
@@ -68,11 +68,38 @@ const loginTutor=expressAsyncHandler(async(req,res)=>{
         }
     }
 )
+
+// Forgot Password Route
+const forgotPassword = expressAsyncHandler(async (req, res) => {
+    const { email } = req.body;
+    try {
+        const token = await generateResetToken(email, "tutor");
+        await sendResetEmail(email, token, "tutor");
+        res.status(200).json({ message: "Password reset email sent" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Reset Password Route
+const resetPasswordHandler = expressAsyncHandler(async (req, res) => {
+    const { token, newPassword } = req.body;
+    try {
+        await resetPassword(token, newPassword);
+        res.status(200).json({ message: "Password successfully reset" });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+
 module.exports={
     getTutor,
     createTutor,
     getTutorById,
     updateTutor,
     deleteTutor,
-    loginTutor
+    loginTutor,
+    resetPasswordHandler,
+    forgotPassword
 }

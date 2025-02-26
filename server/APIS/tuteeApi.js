@@ -9,7 +9,7 @@ TuteeApp.use(exp.json())
 TuteeApp.post('/signIn',createTutee)
 TuteeApp.get('/tutees',tuteeDetails)
 TuteeApp.get('/tutees/:id',tuteeDetailsById)
-TuteeApp.put('/update/:id',updateTutee)
+TuteeApp.put('/update/:email',updateTutee)
 TuteeApp.delete('/delete/:id',deleteTutee)
 
 //login for tutee
@@ -17,6 +17,7 @@ TuteeApp.post('/login',loginTutee);
 //forgot password and reset password 
 TuteeApp.post('/forgot-password',forgotPassword);
 TuteeApp.post('/reset-password',resetPasswordHandler);
+//re
 
 
 module.exports=TuteeApp;
