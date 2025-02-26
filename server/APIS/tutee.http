@@ -71,3 +71,26 @@ Content-Type: application/json
     "token": "your-reset-token",
     "newPassword": "newsecurepassword"
 }
+
+###search Tutee by Name or Email
+GET http://localhost:8000/tutee-api/search?query=John
+
+###search Tutee by Course
+GET http://localhost:8000/tutee-api/search?query=Mathematics
+
+###search Tutee by City or State
+GET http://localhost:8000/tutee-api/search?query=New York
+
+
+###filter tutee by Course and City
+GET http://localhost:8000/tutee-api/filter?course=Mathematics&city=New York
+
+
+###filter tutee by Gender and Timing Slot
+GET http://localhost:8000/tutee-api/filter?gender=female&timeSlot=morning
+
+###filter tutee  by Fee Range 
+GET http://localhost:8000/tutee-api/filter?minFee=500&maxFee=1000
+
+###filter tutee(Combine Multiple Filters)
+GET http://localhost:8000/tutee-api/filter?course=Physics&state=CA&gender=male&timeSlot=evening

@@ -19,4 +19,6 @@ tutorApp.post('/tutor',loginTutor)
 tutorApp.post('/forgot-password',forgotPassword)
 tutorApp.post('/reset-password',resetPasswordHandler)
 
+//search and filter routes
+tutorApp.get('/search',searchTutor);
 module.exports=tutorApp;

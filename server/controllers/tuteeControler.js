@@ -96,6 +96,45 @@ const resetPasswordHandler = expressAsyncHandler(async (req, res) => {
     }
 });
 
+// Search Tutees by Name, Email, Course, City, or State
+const searchTutees = expressAsyncHandler(async (req, res) => {
+    const { query } = req.query;
+    const tutees = await tutee.find({
+        $or: [
+            { firstName: { $regex: query, $options: "i" } },
+            { lastName: { $regex: query, $options: "i" } },
+            { email: { $regex: query, $options: "i" } },
+            { course: { $regex: query, $options: "i" } },
+            { city: { $regex: query, $options: "i" } },
+            { state: { $regex: query, $options: "i" } }
+        ]
+    });
+
+    res.status(200).json({ message: "Search results", payload: tutees });
+});
+
+
+//filter route (filter based on course,city,state,gender,fee,time slots)
+const filterTutees = expressAsyncHandler(async (req, res) => {
+    const { course, city, state, gender, minFee, maxFee, timeSlot } = req.query;
+    let filterCriteria = {};
+
+    if (course) filterCriteria.course = { $regex: course, $options: "i" }; // Case-insensitive match
+    if (city) filterCriteria.city = { $regex: city, $options: "i" };
+    if (state) filterCriteria.state = { $regex: state, $options: "i" };
+    if (gender) filterCriteria.gender = gender; // Exact match for gender
+    if (timeSlot) filterCriteria.timeSlot = timeSlot; // Exact match for timeSlot
+
+    // Fee Structure Filter (if fee is added later)
+    if (minFee || maxFee) {
+        filterCriteria.fee = {};
+        if (minFee) filterCriteria.fee.$gte = parseInt(minFee);
+        if (maxFee) filterCriteria.fee.$lte = parseInt(maxFee);
+    }
+
+    const filteredTutees = await tutee.find(filterCriteria);
+    res.status(200).json({ message: "Filtered tutees", payload: filteredTutees });
+});
 
 module.exports={
     createTutee,

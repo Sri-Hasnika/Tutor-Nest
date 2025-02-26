@@ -17,7 +17,9 @@ TuteeApp.post('/login',loginTutee);
 //forgot password and reset password 
 TuteeApp.post('/forgot-password',forgotPassword);
 TuteeApp.post('/reset-password',resetPasswordHandler);
-//re
 
+//search and filter routes
+tutorApp.get('/search',searchTutee);
+tuteeApp.get('/filter', filterTutees);
 
 module.exports=TuteeApp;

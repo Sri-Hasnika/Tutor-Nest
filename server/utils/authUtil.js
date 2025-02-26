@@ -31,14 +31,17 @@ const validateTutee=async(email,password)=>{
         throw new Error('Email and password are required');
     }
     const tuteeValid=await tutee.findOne({email})
-    console.log(tuteeValid)
+    // console.log(tuteeValid)
     if (!tuteeValid){
         throw new Error('Invalid credentials');
     }
      const isMatch= await bcrypt.compare(password,tuteeValid.password);
+     console.log("has")
+     console.log(isMatch)
      if(!isMatch){
         throw new Error('invalid credentials');
      }
+    //  console.log("isMatch")
      return tuteeValid;
 }
 
@@ -51,7 +54,8 @@ const validateTutor=async(email,password)=>{
     if(!tutorValid){
         throw new Error('Invalid credentials');
     }
-    const isMatch=await bcrypt.compare(password,tutorValid.password);
+const isMatch=await bcrypt.compare(password,tutorValid.password);
+
     if(!isMatch){
         throw new Error('invalid credentials');
     }
