@@ -109,7 +109,7 @@ resetPasswordExpires: {
     type: Date, // Stores expiration time (e.g., 1 hour)
 }
 
-},{"strict":"throw"})
+},{"strict":"throw",timestamps: true})
 
 const tutee=mongoose.model('tutee',tuteeSchema);
 module.exports=tutee;

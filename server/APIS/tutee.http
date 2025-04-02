@@ -17,11 +17,12 @@ Content-Type: application/json
     "password": "secure123"
 }
 
+
 ### Get All Tutees
 GET http://localhost:8000/tutee-api/tutees
 
 ### Get a Tutee by ID
-GET http://localhost:8000/tutee-api/tutees/64f1b2c3e4b0a1a2b3c4d5e6
+GET http://localhost:8000/tutee-api/tutees/67bdf643e983f3eb813e8a3b
 
 ### Update a Tutee
 PUT http://localhost:8000/tutee-api/update/john.smith@example.com
@@ -51,8 +52,8 @@ POST http://localhost:8000/tutee-api/login
 Content-Type: application/json
 
 {
-    "email": "srihasnika@gmail.com",
-    "password": "devendra"
+    "email": "john.doe@example.com",
+    "password": "secure123"
 }
 
 ### Forgot Password
@@ -94,3 +95,118 @@ GET http://localhost:8000/tutee-api/filter?minFee=500&maxFee=1000
 
 ###filter tutee(Combine Multiple Filters)
 GET http://localhost:8000/tutee-api/filter?course=Physics&state=CA&gender=male&timeSlot=evening
+
+###demo class routes
+###Book a Demo Class
+POST http://localhost:8000/tutee-api/demo-class/book
+Content-Type: application/json
+
+{
+    "tuteeId": "90ad223ffbe6574cce9d1234",
+    "demoClassId": "89cf222hklrtfd3bc6t7e98a"
+}
+
+###Get All Booked Demo Classes
+GET http://localhost:8000/tutee-api/demo-class/booked/90ad223ffbe6574cce9d1234
+
+###Cancel a Booked Demo Class
+DELETE http://localhost:8000/tutee-api/demo-class/booked/99af332hhgbf234cde0e998b
+
+
+
+
+
+### Create Tutee 1
+POST http://localhost:8000/tutee-api/signIn
+Content-Type: application/json
+
+{
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "moblieNumber": 9876543201,
+    "email": "alice.smith@example.com",
+    "gender": "female",
+    "studying": "10th Grade",
+    "course": "Science",
+    "pincode": 123457,
+    "locality": "Highway Road",
+    "city": "Los Angeles",
+    "state": "CA",
+    "password": "alice123"
+}
+
+### Create Tutee 2
+POST http://localhost:8000/tutee-api/signIn
+Content-Type: application/json
+
+{
+    "firstName": "Bob",
+    "lastName": "Brown",
+    "moblieNumber": 9876543202,
+    "email": "bob.brown@example.com",
+    "gender": "male",
+    "studying": "11th Grade",
+    "course": "Physics",
+    "pincode": 123458,
+    "locality": "Green Park",
+    "city": "Chicago",
+    "state": "IL",
+    "password": "bobsecure"
+}
+
+### Create Tutee 3
+POST http://localhost:8000/tutee-api/signIn
+Content-Type: application/json
+
+{
+    "firstName": "Charlie",
+    "lastName": "Davis",
+    "moblieNumber": 9876543203,
+    "email": "charlie.davis@example.com",
+    "gender": "male",
+    "studying": "12th Grade",
+    "course": "Mathematics",
+    "pincode": 123459,
+    "locality": "Sunset Boulevard",
+    "city": "New York",
+    "state": "NY",
+    "password": "charliepass"
+}
+
+### Create Tutee 4
+POST http://localhost:8000/tutee-api/signIn
+Content-Type: application/json
+
+{
+    "firstName": "Diana",
+    "lastName": "Evans",
+    "moblieNumber": 9876543204,
+    "email": "diana.evans@example.com",
+    "gender": "female",
+    "studying": "9th Grade",
+    "course": "English",
+    "pincode": 123460,
+    "locality": "Broadway Street",
+    "city": "Houston",
+    "state": "TX",
+    "password": "diana789"
+}
+
+### Create Tutee 5
+POST http://localhost:8000/tutee-api/signIn
+Content-Type: application/json
+
+{
+    "firstName": "Ethan",
+    "lastName": "Foster",
+    "moblieNumber": 9876543205,
+    "email": "ethan.foster@example.com",
+    "gender": "male",
+    "studying": "11th Grade",
+    "course": "Computer Science",
+    "pincode": 123461,
+    "locality": "Lakeview Avenue",
+    "city": "San Francisco",
+    "state": "CA",
+    "password": "ethan456"
+}

@@ -6,7 +6,7 @@ Content-Type: application/json
     "firstName": "Alice",
     "lastName": "Johnson",
     "mobileNo": 9876543210,
-    "email": "alice.johnson@example.com",
+    "email": "hasnika@gmail.com",
     "age": 30,
     "gender": "female",
     "courseToTeach": ["Mathematics", "Physics"],
@@ -22,7 +22,7 @@ Content-Type: application/json
     "locality": "Downtown",
     "city": "Los Angeles",
     "state": "CA",
-    "password": "strongpassword123",
+    "password": "qwerty123",
     "profileImage": "alice_profile.jpg"
 }
 
@@ -68,8 +68,8 @@ POST http://localhost:8000/tutor-api/tutor
 Content-Type: application/json
 
 {
-    "email": "alice.johnson@example.com",
-    "password": "strongpassword123"
+    "email": "hasnika@gmail.com",
+    "password": "qwerty123"
 }
 
 ### Forgot Password
@@ -88,3 +88,53 @@ Content-Type: application/json
     "token": "your-reset-token",
     "newPassword": "newsecurepassword"
 }
+
+### Search Tutor by Name or Email
+GET http://localhost:8000/tutor-api/search?query=Alice
+
+### Search Tutor by Subject
+GET http://localhost:8000/tutor-api/search?query=Mathematics
+
+### Search Tutor by City or State
+GET http://localhost:8000/tutor-api/search?query=Los Angeles
+
+
+### Filter Tutor by Subject and City
+GET http://localhost:8000/tutor-api/filter?subject=Mathematics&city=Los Angeles
+
+### Filter Tutor by Gender and Timing Slot
+GET http://localhost:8000/tutor-api/filter?gender=female&minTime=8&maxTime=16
+
+### Filter Tutor by Fee Range
+GET http://localhost:8000/tutor-api/filter?minFee=500&maxFee=1000
+
+### Filter Tutor by Qualification
+GET http://localhost:8000/tutor-api/filter?qualification=Ph.D
+
+### Filter Tutor (Combine Multiple Filters)
+GET http://localhost:8000/tutor-api/filter?subject=Physics&state=CA&gender=male&minTime=9&maxTime=18&minFee=800
+
+
+
+
+
+###demo class rest apis
+
+###Schedule a New Demo Class 
+POST http://localhost:8000/tutor-api/demo-class
+Content-Type: application/json
+
+{
+    "tutorId": "67bf111efabfed3ccbc3e63b",
+    "date": "2025-03-05",
+    "time": "10:00 AM",
+    "duration": 60,
+    "subject": "Algebra"
+}
+
+###Get All Scheduled Demo Classes
+GET http://localhost:8000/tutor-api/demo-class/67bf111efabfed3ccbc3e63b
+
+###Delete a Scheduled Demo Class
+DELETE http://localhost:8000/tutor-api/demo-class/67c1c3b4566759ef6b283327
+

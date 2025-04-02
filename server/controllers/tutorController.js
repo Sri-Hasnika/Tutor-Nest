@@ -6,6 +6,8 @@ const {generateToken,validateTutor,generateResetToken,sendResetEmail,resetPasswo
 
 const createTutor=expressAsyncHandler(async(req,res)=>{
     const newTutor=req.body;
+    const hashedPassword = await bcrypt.hash(newTutor.password,10);
+    newTutor.password=hashedPassword;
     const newTutorObj=tutor(newTutor);
     const TutorObj=await newTutorObj.save();
     res.status(201).send({message:"tutors",payload:TutorObj});
@@ -72,14 +74,22 @@ const loginTutor=expressAsyncHandler(async(req,res)=>{
 // Forgot Password Route
 const forgotPassword = expressAsyncHandler(async (req, res) => {
     const { email } = req.body;
+    let user = await tutee.findOne({ email }) || await tutor.findOne({ email });
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
     try {
-        const token = await generateResetToken(email, "tutor");
-        await sendResetEmail(email, token, "tutor");
+        const token = await generateResetToken(email, user instanceof tutee ? "tutee" : "tutor");
+        await sendResetEmail(email, token, user instanceof tutee ? "tutee" : "tutor");
         res.status(200).json({ message: "Password reset email sent" });
     } catch (error) {
+        console.error("Forgot Password Error:", error);
         res.status(500).json({ message: error.message });
     }
 });
+
 
 // Reset Password Route
 const resetPasswordHandler = expressAsyncHandler(async (req, res) => {
@@ -92,6 +102,66 @@ const resetPasswordHandler = expressAsyncHandler(async (req, res) => {
     }
 });
 
+// Search Tutors by Name, Email, Course, Subject, City, or State
+const searchTutors = expressAsyncHandler(async (req, res) => {
+    const { query } = req.query;
+    const tutors = await tutor.find({
+        $or: [
+            { firstName: { $regex: query, $options: "i" } },
+            { lastName: { $regex: query, $options: "i" } },
+            { email: { $regex: query, $options: "i" } },
+            { courseToTeach: { $regex: query, $options: "i" } },
+            { subjectsToTeach: { $regex: query, $options: "i" } },
+            { city: { $regex: query, $options: "i" } },
+            { state: { $regex: query, $options: "i" } }
+        ]
+    });
+
+    res.status(200).json({ message: "Search results", payload: tutors });
+});
+
+
+//filter tutors 
+const filterTutors = expressAsyncHandler(async (req, res) => {
+    const { 
+        subject, city, state, gender, qualification, 
+        minExperience, maxExperience, minFee, maxFee, 
+        minTime, maxTime, tutorLocation 
+    } = req.query;
+    
+    let filterCriteria = {};
+
+    if (subject) filterCriteria.subjectsToTeach = { $regex: subject, $options: "i" };
+    if (city) filterCriteria.city = { $regex: city, $options: "i" };
+    if (state) filterCriteria.state = { $regex: state, $options: "i" };
+    if (gender) filterCriteria.gender = gender; // Exact match for gender
+    if (qualification) filterCriteria.qualification = { $regex: qualification, $options: "i" }; // Case-insensitive qualification search
+    if (tutorLocation) filterCriteria.tutorLocation = tutorLocation; // Exact match for tutor location
+
+    // Experience Range Filter
+    if (minExperience || maxExperience) {
+        filterCriteria.experience = {};
+        if (minExperience) filterCriteria.experience.$gte = parseInt(minExperience);
+        if (maxExperience) filterCriteria.experience.$lte = parseInt(maxExperience);
+    }
+
+    // Hourly Price Range Filter
+    if (minFee || maxFee) {
+        filterCriteria.hourlyPrice = {};
+        if (minFee) filterCriteria.hourlyPrice.$gte = parseInt(minFee);
+        if (maxFee) filterCriteria.hourlyPrice.$lte = parseInt(maxFee);
+    }
+
+    // Preferred Timing Range Filter (Assuming it's stored as a number 0-23 representing hours)
+    if (minTime || maxTime) {
+        filterCriteria.preferredTime = {};
+        if (minTime) filterCriteria.preferredTime.$gte = parseInt(minTime);
+        if (maxTime) filterCriteria.preferredTime.$lte = parseInt(maxTime);
+    }
+
+    const filteredTutors = await tutor.find(filterCriteria);
+    res.status(200).json({ message: "Filtered tutors", payload: filteredTutors });
+});
 
 module.exports={
     getTutor,
@@ -101,5 +171,7 @@ module.exports={
     deleteTutor,
     loginTutor,
     resetPasswordHandler,
-    forgotPassword
+    forgotPassword,
+    searchTutors,
+    filterTutors
 }

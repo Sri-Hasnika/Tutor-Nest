@@ -9,10 +9,10 @@ require('dotenv').config();
 //generate jwt token
 const generateToken=async(userId)=>{
     let user=await tutee.findById(userId);
-    user.role="tutee";
+    let role="tutee";
     if(!user){
         user=await tutor.findById(userId);
-        user.role="tutor";
+        role="tutor";
     }
     if (!user){
         throw new Error("User not found");
@@ -20,7 +20,7 @@ const generateToken=async(userId)=>{
 
     return jwt.sign({
         id:userId,
-        role:user.role
+        role:role
     },process.env.JWT_SECRET,{
         expiresIn:process.env.JWT_EXPIRES_IN
     });
@@ -35,6 +35,7 @@ const validateTutee=async(email,password)=>{
     if (!tuteeValid){
         throw new Error('Invalid credentials');
     }
+    console.log("password"+password);
      const isMatch= await bcrypt.compare(password,tuteeValid.password);
      console.log("has")
      console.log(isMatch)
@@ -51,37 +52,36 @@ const validateTutor=async(email,password)=>{
         throw new Error("Email and password are required");
     }
     const tutorValid=await tutor.findOne({email})
+    console.log(tutorValid)
     if(!tutorValid){
         throw new Error('Invalid credentials');
     }
+    console.log("password:"+password);
 const isMatch=await bcrypt.compare(password,tutorValid.password);
-
+console.log(isMatch,'line-58-util')
     if(!isMatch){
-        throw new Error('invalid credentials');
+        throw new Error('line-60 -authUtil- invalid credentials');
     }
     return tutorValid;
 }
 //generate reset token 
-const generateResetToken=async(email,role)=>{
-    let user;
-    if(role=='tutee'){
-        user=await tutee.findOne({email});
-    }else{
-        user=await tutor.findOne({email});
-    }
-    if(!user){
-        throw new Error('user not found');
-    }
-    // Generate token
-    const resetToken = crypto.randomBytes(20).toString('hex');
-    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+const generateResetToken = async (email, role) => {
+    let user = role === "tutee" ? await tutee.findOne({ email }) : await tutor.findOne({ email });
+
+    if (!user) throw new Error("User not found");
+
+    // Generate reset token
+    const resetToken = crypto.randomBytes(20).toString("hex");
+    const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
 
     user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpires = Date.now() + 3600000; // 1-hour expiry
+    user.resetPasswordExpires = Date.now() + 3600000; // Token valid for 1 hour
 
-    await user.save();
-    return resetToken;
-}
+    await user.save({ validateBeforeSave: false });
+
+    return resetToken; // Return plain token for email link
+};
+
 
 // Send Password Reset Email
 const sendResetEmail = async (email, token, role) => {

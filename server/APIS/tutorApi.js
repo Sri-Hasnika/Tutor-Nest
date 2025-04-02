@@ -1,6 +1,7 @@
 const exp=require('express');
 const tutorApp=exp.Router();
-const {createTutor,getTutor,getTutorById,loginTutor,updateTutor,deleteTutor,forgotPassword,resetPasswordHandler}=require('../controllers/tutorController')
+const {createTutor,getTutor,getTutorById,loginTutor,updateTutor,deleteTutor,forgotPassword,resetPasswordHandler,searchTutors,filterTutors}=require('../controllers/tutorController')
+const {scheduleDemoClass, getDemoClasses, deleteDemoClass}=require('../controllers/demoClassControler');
 
 
 //body parser middleware
@@ -20,5 +21,19 @@ tutorApp.post('/forgot-password',forgotPassword)
 tutorApp.post('/reset-password',resetPasswordHandler)
 
 //search and filter routes
-tutorApp.get('/search',searchTutor);
+tutorApp.get('/search',searchTutors);
+tutorApp.get('/filter',filterTutors);
+
+//demo class routes
+// Schedule a new demo class
+tutorApp.post('/demo-class', scheduleDemoClass);
+// Get all scheduled demo classes for a tutor
+tutorApp.get('/demo-class/:tutorId', getDemoClasses);
+// Delete a demo class
+tutorApp.delete('/demo-class/:id', deleteDemoClass);
+
+
+
+
+
 module.exports=tutorApp;

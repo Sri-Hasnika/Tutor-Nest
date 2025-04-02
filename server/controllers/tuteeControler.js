@@ -7,13 +7,11 @@ const {generateToken,validateTutee,generateResetToken,sendResetEmail,resetPasswo
 //create a new tutee
 const createTutee=expressAsyncHandler(async(req,res)=>{
     const newTutee=req.body;
+    const hashedPassword=await bcrypt.hash(newTutee.password,10);
+    newTutee.password=hashedPassword;
     const newTuteeObj=tutee(newTutee);
-    //hash the password
-    const hashedpassword=await bcrypt.hash(newTuteeObj.password,10);
-    newTuteeObj.password=hashedpassword;
-
     const TuteeObj=await newTuteeObj.save();
-    res.status(201).send({message:"tutees",payload:TuteeObj})
+    res.status(201).send({message:"tutees",payload:TuteeObj});
     })
 
 //get tutee details
@@ -76,25 +74,50 @@ const loginTutee=expressAsyncHandler(async(req,res)=>{
 // Forgot Password Route
 const forgotPassword = expressAsyncHandler(async (req, res) => {
     const { email } = req.body;
+    let user = await tutee.findOne({ email }) || await tutor.findOne({ email });
+
+    if (!user) {
+        return res.status(404).json({ message: "User not found" });
+    }
+
     try {
-        const token = await generateResetToken(email, "tutee");
-        await sendResetEmail(email, token, "tutee");
+        const token = await generateResetToken(email, user instanceof tutee ? "tutee" : "tutor");
+        await sendResetEmail(email, token, user instanceof tutee ? "tutee" : "tutor");
         res.status(200).json({ message: "Password reset email sent" });
     } catch (error) {
+        console.error("Forgot Password Error:", error);
         res.status(500).json({ message: error.message });
     }
 });
 
+
 // Reset Password Route
-const resetPasswordHandler = expressAsyncHandler(async (req, res) => {
-    const { token, newPassword } = req.body;
-    try {
-        await resetPassword(token, newPassword);
-        res.status(200).json({ message: "Password successfully reset" });
-    } catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-});
+const resetPasswordHandler = async (token, newPassword) => {
+    const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+    let user = await tutee.findOne({
+        resetPasswordToken: hashedToken,
+        resetPasswordExpires: { $gt: Date.now() }
+    }) || await tutor.findOne({
+        resetPasswordToken: hashedToken,
+        resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if (!user) throw new Error("Invalid or expired token");
+
+    // Hash new password
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+
+    // Clear reset fields
+    user.resetPasswordToken = null;
+    user.resetPasswordExpires = null;
+
+    await user.save({ validateBeforeSave: false });
+
+    return { message: "Password successfully reset" };
+};
+
 
 // Search Tutees by Name, Email, Course, City, or State
 const searchTutees = expressAsyncHandler(async (req, res) => {
@@ -144,5 +167,7 @@ module.exports={
     deleteTutee,
     loginTutee,
     forgotPassword,
-    resetPasswordHandler
+    resetPasswordHandler,
+    searchTutees,
+    filterTutees
 }
