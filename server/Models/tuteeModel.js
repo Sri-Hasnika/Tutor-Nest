@@ -13,7 +13,7 @@ lastName:{
     type:String,
     required:true
 },
-moblieNumber:{
+mobileNumber:{
     type:Number,
     required:true,
     minLength:10,
