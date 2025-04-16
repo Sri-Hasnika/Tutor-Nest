@@ -17,10 +17,12 @@ const generateToken=async(userId)=>{
     if (!user){
         throw new Error("User not found");
     }
-
+    user.password=undefined;
+    // console.log(user);
     return jwt.sign({
         id:userId,
-        role:role
+        role:role,
+        data:user
     },process.env.JWT_SECRET,{
         expiresIn:process.env.JWT_EXPIRES_IN
     });
@@ -35,7 +37,7 @@ const validateTutee=async(email,password)=>{
     if (!tuteeValid){
         throw new Error('Invalid credentials');
     }
-    console.log("password"+password);
+    // console.log("password"+password);
      const isMatch= await bcrypt.compare(password,tuteeValid.password);
      console.log("has")
      console.log(isMatch)

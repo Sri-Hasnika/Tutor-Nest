@@ -3,9 +3,17 @@ const app=exp()
 const mongoose=require('mongoose')
 const tutorApp=require('./APIS/tutorApi')
 const TuteeApp=require('./APIS/tuteeApi');
+const cors = require('cors')
 //using port from .env
 require('dotenv').config()
 const port=process.env.PORT||9000
+
+//cors 
+app.use(cors(
+    {
+        origin: "http://localhost:3000"
+    }
+))
 
 //user parser middleware
 app.use(exp.json())
