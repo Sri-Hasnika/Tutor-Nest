@@ -3,10 +3,10 @@ POST http://localhost:8000/tutee-api/signIn
 Content-Type: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Doe",
-    "moblieNumber": 9876543210,
-    "email": "john.doe@example.com",
+    "firstName": "John-1",
+    "lastName": "Doe-1",
+    "mobileNumber":92342673883,
+    "email": "john.doe1@example.com",
     "gender": "male",
     "studying": "12th Grade",
     "course": "Mathematics",
@@ -25,22 +25,21 @@ GET http://localhost:8000/tutee-api/tutees
 GET http://localhost:8000/tutee-api/tutees/67bdf643e983f3eb813e8a3b
 
 ### Update a Tutee
-PUT http://localhost:8000/tutee-api/update/john.smith@example.com
+PUT http://localhost:8000/tutee-api/update/680396e142cbfb9ed83dd31e
 Content-Type: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Smith",
-    "moblieNumber": 9876543210,
-    "email": "john.smith@example.com",
+    "firstName": "Qwe",
+    "lastName": "rty",
+    "mobileNumber": 9876543210,
+    "email": "qr1@gmail.com",
     "gender": "male",
     "studying": "12th Grade",
     "course": "Physics",
     "pincode": 123456,
     "locality": "Main Street",
     "city": "New York",
-    "state": "NY",
-    "password": "newpassword123"
+    "state": "NY"
 }
 
 ### Delete a Tutee
@@ -123,7 +122,7 @@ Content-Type: application/json
 {
     "firstName": "Alice",
     "lastName": "Smith",
-    "moblieNumber": 9876543201,
+    "mobileNumber": 9876543201,
     "email": "alice.smith@example.com",
     "gender": "female",
     "studying": "10th Grade",
@@ -142,7 +141,7 @@ Content-Type: application/json
 {
     "firstName": "Bob",
     "lastName": "Brown",
-    "moblieNumber": 9876543202,
+    "mobileNumber": 9876543202,
     "email": "bob.brown@example.com",
     "gender": "male",
     "studying": "11th Grade",
@@ -161,7 +160,7 @@ Content-Type: application/json
 {
     "firstName": "Charlie",
     "lastName": "Davis",
-    "moblieNumber": 9876543203,
+    "mobileNumber": 9876543203,
     "email": "charlie.davis@example.com",
     "gender": "male",
     "studying": "12th Grade",
@@ -180,7 +179,7 @@ Content-Type: application/json
 {
     "firstName": "Diana",
     "lastName": "Evans",
-    "moblieNumber": 9876543204,
+    "mobileNumber": 9876543204,
     "email": "diana.evans@example.com",
     "gender": "female",
     "studying": "9th Grade",
@@ -199,7 +198,7 @@ Content-Type: application/json
 {
     "firstName": "Ethan",
     "lastName": "Foster",
-    "moblieNumber": 9876543205,
+    "mobileNumber": 9876543205,
     "email": "ethan.foster@example.com",
     "gender": "male",
     "studying": "11th Grade",

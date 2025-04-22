@@ -6,11 +6,16 @@ const {generateToken,validateTutee,generateResetToken,sendResetEmail,resetPasswo
 
 //create a new tutee
 const createTutee=expressAsyncHandler(async(req,res)=>{
+    // console.log("entering");
     const newTutee=req.body;
     const hashedPassword=await bcrypt.hash(newTutee.password,10);
+    
     newTutee.password=hashedPassword;
+    // console.log(newTutee);
     const newTuteeObj=tutee(newTutee);
+    
     const TuteeObj=await newTuteeObj.save();
+    
     res.status(201).send({message:"tutees",payload:TuteeObj});
     })
 
@@ -34,7 +39,9 @@ const tuteeDetailsById=expressAsyncHandler(async(req,res)=>{
 //update tutee details
 const updateTutee=expressAsyncHandler(async(req,res)=>{
     const tuteeId=req.params.id;
+    console.log(tuteeId);
     const updatedTutee=await tutee.findByIdAndUpdate(tuteeId,req.body,{new:true});
+    console.log(updatedTutee)
     if(updatedTutee){
         res.send({message:"Tutee updated",payload:updatedTutee});
     }else{
@@ -59,8 +66,8 @@ const loginTutee=expressAsyncHandler(async(req,res)=>{
         const tuteeLogin=await validateTutee(email,password);
         if(tuteeLogin){
             const token=await generateToken(tuteeLogin._id);
-            console.log("token",token);
-            res.status(200).json({token});
+            // console.log("token",token);
+            res.status(200).json({token,tuteeLogin});
         }else{
             res.status(401).json({message:"Invalid credentials"});
         }

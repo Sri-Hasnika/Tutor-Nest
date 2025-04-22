@@ -16,14 +16,11 @@ lastName:{
 mobileNumber:{
     type:Number,
     required:true,
-    minLength:10,
-    maxLength:10,
-    unique:true,
 },
 email:{
     type:String,
     required:true,
-    unique:true
+    unique:true,
 },
 gender:{
     type:String,
@@ -38,34 +35,6 @@ course:{
     type:String,
     required:true,
 },
-// subject:{
-//     type:String,
-//     required:true,
-// },
-// location:{
-//     type:String,
-//     enum:['online','At Home','At Tutor\'s place','At Institute'],
-//     required:true,
-// },
-// genderTutor:{
-//     type:String,
-//     enum:['male','female','others'],
-// },
-// feeType:{
-//     type:String,
-//     enum:['hourly','weekly','monthly','yearly'],
-//     required:true,
-// },
-// fee:{
-//     type:Number,
-//     required:true,
-// },
-// timeSlot:{
-//     type:String,
-//     required:true,
-//     enum:['morning','afternoon','evening','night'],
-// },
-//location
 pincode:{
     type:Number,
     minLength:6,
@@ -103,13 +72,13 @@ password:{
 
 //reset and forgot password
 resetPasswordToken:{
-    type: String, // Stores the hashed reset token
+    type: String,
 },
 resetPasswordExpires: {
-    type: Date, // Stores expiration time (e.g., 1 hour)
-}
+    type: Date,
+},
 
-},{"strict":"throw",timestamps: true})
+},{timestamps: true})
 
 const tutee=mongoose.model('tutee',tuteeSchema);
 module.exports=tutee;

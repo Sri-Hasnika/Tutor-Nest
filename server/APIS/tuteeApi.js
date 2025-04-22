@@ -7,14 +7,14 @@ TuteeApp.use(exp.json())
 
 
 //create,get,update,delete a tutee(student or parent)
-TuteeApp.post('/signIn',createTutee)
+TuteeApp.post('/signIn',createTutee)//d
 TuteeApp.get('/tutees',tuteeDetails)
 TuteeApp.get('/tutees/:id',tuteeDetailsById)
-TuteeApp.put('/update/:email',updateTutee)
+TuteeApp.put('/update/:id',updateTutee)//d
 TuteeApp.delete('/delete/:id',deleteTutee)
 
 //login for tutee
-TuteeApp.post('/login',loginTutee);
+TuteeApp.post('/login',loginTutee);//d
 //forgot password and reset password 
 TuteeApp.post('/forgot-password',forgotPassword);
 TuteeApp.post('/reset-password',resetPasswordHandler);
