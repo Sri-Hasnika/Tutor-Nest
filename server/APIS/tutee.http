@@ -101,17 +101,14 @@ POST http://localhost:8000/tutee-api/demo-class/book
 Content-Type: application/json
 
 {
-    "tuteeId": "90ad223ffbe6574cce9d1234",
-    "demoClassId": "89cf222hklrtfd3bc6t7e98a"
+    "tutorId": "6807b173c4b37b67886c9d24",
+    "tuteeId": "67ffa25cc8b64b2e2f733729",
+    "subject":"Mathematics",
+    "message":"I would like to schedule a demo class for Mathematics."
 }
 
-###Get All Booked Demo Classes
-GET http://localhost:8000/tutee-api/demo-class/booked/90ad223ffbe6574cce9d1234
-
-###Cancel a Booked Demo Class
-DELETE http://localhost:8000/tutee-api/demo-class/booked/99af332hhgbf234cde0e998b
-
-
+###
+GET http://localhost:8000/tutee-api/demo-class/booked/67ffa25cc8b64b2e2f733729
 
 
 

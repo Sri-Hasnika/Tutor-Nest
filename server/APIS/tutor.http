@@ -3,57 +3,56 @@ POST http://localhost:8000/tutor-api/signIn
 Content-Type: application/json
 
 {
-    "firstName": "Alice",
-    "lastName": "Johnson",
-    "mobileNo": 9876543210,
-    "email": "hasnika@gmail.com",
-    "age": 30,
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "mobileNumber": 9123456789,
+    "email": "jane.doe@example.com",
     "gender": "female",
-    "courseToTeach": ["Mathematics", "Physics"],
-    "subjectsToTeach": ["Algebra", "Calculus"],
-    "qualification": "M.Sc in Mathematics",
-    "experience": 5,
-    "preferredTime": "morning",
-    "hourlyPrice": 30,
-    "tutorLocation": "Online",
-    "AboutMe": "Passionate math tutor with 5 years of experience.",
-    "resume": "alice_resume.pdf",
-    "pincode": 123456,
-    "locality": "Downtown",
-    "city": "Los Angeles",
-    "state": "CA",
-    "password": "qwerty123",
-    "profileImage": "alice_profile.jpg"
+    "subject": "Mathematics",
+    "city": "New York",
+    "state": "NY",
+    "password": "secure123"
 }
 
 ### Get All Tutors
 GET http://localhost:8000/tutor-api/tutor
 
 ### Get a Tutor by ID
-GET http://localhost:8000/tutor-api/tutor/67bf111efabfed3ccbc3e63b
+GET http://localhost:8000/tutor-api/tutor/60a7b2c3e4b0a1a2b3c4d5e6
 
 ### Update a Tutor
-PUT http://localhost:8000/tutor-api/tutor/67bf111efabfed3ccbc3e63b
+PUT http://localhost:8000/tutor-api/tutor/60a7b2c3e4b0a1a2b3c4d5e6
 Content-Type: application/json
 
 {
-    "firstName": "Alice",
-    "lastName": "Williams",
-    "mobileNo": 9876543210,
-    "email": "alice.williams@example.com",
-    "age": 32,
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "mobileNumber": 9876543210,
+    "email": "jane.smith@example.com",
     "gender": "female",
-    "courseToTeach": ["Physics"],
-    "subjectsToTeach": ["Quantum Mechanics"],
-    "qualification": "Ph.D. in Physics",
-    "experience": 6,
-    "preferredTime": "evening",
-    "hourlyPrice": 40,
-    "tutorLocation": "At Home",
-    "AboutMe": "Physics expert with a Ph.D. and 6 years of experience.",
-    "resume": "alice_resume_updated.pdf",
-    "pincode": 123456,
-    "locality": "Downtown",
+    "subject": "Physics",
+    "city": "New York",
+    "state": "NY"
+}
+
+### Delete a Tutor
+DELETE http://localhost:8000/tutor-api/tutor/60a7b2c3e4b0a1a2b3c4d5e6
+
+### Tutor Login
+POST http://localhost:8000/tutor-api/tutor
+Content-Type: application/json
+
+{
+    "email": "jane.doe@example.com",
+    "password": "secure123"
+}
+
+### Forgot Password
+POST http://localhost:8000/tutor-api/forgot-password
+Content-Type: application/json
+
+{
+    "email": "jane.doe@example.com"
     "city": "Los Angeles",
     "state": "CA",
     "password": "newpassword123",
@@ -119,22 +118,14 @@ GET http://localhost:8000/tutor-api/filter?subject=Physics&state=CA&gender=male&
 
 
 ###demo class rest apis
+#tId: 6807b173c4b37b67886c9d24
 
-###Schedule a New Demo Class 
-POST http://localhost:8000/tutor-api/demo-class
+GET http://localhost:8000/tutor-api/demo-class/6807b173c4b37b67886c9d24
+
+### Add Meet Link to Demo Class
+PUT http://localhost:8000/tutor-api/demo-class/6807b173c4b37b67886c9d24/6807b62d4ee35db15e4580ae
 Content-Type: application/json
 
 {
-    "tutorId": "67bf111efabfed3ccbc3e63b",
-    "date": "2025-03-05",
-    "time": "10:00 AM",
-    "duration": 60,
-    "subject": "Algebra"
+    "meetLink": "https://meet.google.com/cdf-kgix-acx"
 }
-
-###Get All Scheduled Demo Classes
-GET http://localhost:8000/tutor-api/demo-class/67bf111efabfed3ccbc3e63b
-
-###Delete a Scheduled Demo Class
-DELETE http://localhost:8000/tutor-api/demo-class/67c1c3b4566759ef6b283327
-

@@ -1,38 +1,37 @@
 const mongoose = require('mongoose');
 
-const demoClassSchema = mongoose.Schema({
-    tutorId: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'tutor',
-         required: true 
-        },
-    date: {
-         type: String, 
-         required: true
-         },
-    time: { 
-        type: String,
-         required: true 
-        },
-    duration: { 
-        type: Number, 
-        required: true 
-    }, // Duration in minutes
-    subject: { 
-        type: String,
-         required: true
-         },
-    tuteeId: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'tutee', 
-            // required: true 
-        },
-    demoClassId: { 
+const demoRequestSchema = new mongoose.Schema({
+    tuteeId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'DemoClass', 
-        // required: true
+        ref: 'tutee',
+        required: true
+    },
+    tutorId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'tutor',
+        required: true
+    },
+    subject: {
+        type: String,
+    },
+    message: {
+        type: String,
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'accepted', 'rejected'],
+        default: 'pending'
+    },
+    meetLink: {
+        type: String,
+        default: ''
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
-}, { timestamps: true });
+});
 
-const DemoClass = mongoose.model('DemoClass', demoClassSchema);
-module.exports = DemoClass;
+const DemoRequest = mongoose.model('DemoRequest', demoRequestSchema);
+
+module.exports = DemoRequest;

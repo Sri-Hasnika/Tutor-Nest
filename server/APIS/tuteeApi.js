@@ -1,7 +1,8 @@
 const exp=require('express');
 const TuteeApp=exp.Router();
 const {createTutee,tuteeDetails,tuteeDetailsById,updateTutee,deleteTutee,loginTutee, forgotPassword, resetPassword, searchTutees, filterTutees, resetPasswordHandler}=require('../controllers/tuteeControler');
-const {bookDemoClass, getBookedDemoClasses, cancelDemoClass }=require('../controllers/demoClassControler');
+const { bookDemoClass, getBookedDemoClasses } = require('../controllers/demoClassControler');
+
 //body parser middleware
 TuteeApp.use(exp.json())
 
@@ -23,9 +24,10 @@ TuteeApp.post('/reset-password',resetPasswordHandler);
 TuteeApp.get('/search',searchTutees);
 TuteeApp.get('/filter', filterTutees);
 
-//demo class routes
+
 TuteeApp.post('/demo-class/book',bookDemoClass);
 TuteeApp.get('/demo-class/booked/:tuteeId',getBookedDemoClasses);
-TuteeApp.delete('/demo-class/booked/:id',cancelDemoClass);
+
+
 
 module.exports=TuteeApp;
