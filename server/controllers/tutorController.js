@@ -56,6 +56,7 @@ const deleteTutor=expressAsyncHandler(async(req,res)=>{
 const loginTutor=expressAsyncHandler(async(req,res)=>{
     const {email,password}=req.body;
     try{
+        console.log("Entering")
         const tutorLogin=await validateTutor(email,password);
         if(tutorLogin){
             const token=await generateToken(tutorLogin._id);

@@ -26,6 +26,10 @@ const demoRequestSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
+    finalDate:{
+        type: Date,
+        default:null
+    },
     createdAt: {
         type: Date,
         default: Date.now

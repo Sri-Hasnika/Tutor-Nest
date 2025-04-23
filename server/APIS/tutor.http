@@ -18,7 +18,7 @@ Content-Type: application/json
 GET http://localhost:8000/tutor-api/tutor
 
 ### Get a Tutor by ID
-GET http://localhost:8000/tutor-api/tutor/60a7b2c3e4b0a1a2b3c4d5e6
+GET http://localhost:8000/tutor-api/tutor/6807b173c4b37b67886c9d24
 
 ### Update a Tutor
 PUT http://localhost:8000/tutor-api/tutor/60a7b2c3e4b0a1a2b3c4d5e6
@@ -127,5 +127,6 @@ PUT http://localhost:8000/tutor-api/demo-class/6807b173c4b37b67886c9d24/6808bfd3
 Content-Type: application/json
 
 {
-    "meetLink": "https://meet.google.com/cdf-kgix-acx"
+    "meetLink": "https://meet.google.com/cdf-kgix-acx",
+    "finalDate":
 }

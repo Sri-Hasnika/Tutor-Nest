@@ -15,7 +15,7 @@ tutorApp.get('/tutor/:id',getTutorById)
 tutorApp.put('/tutor/:id',updateTutor)
 tutorApp.delete('/tutor/:id',deleteTutor)
 //login tutor route
-tutorApp.post('/tutor',loginTutor)
+tutorApp.post('/login',loginTutor)
 
 //forgot password or reset password for tutor
 tutorApp.post('/forgot-password',forgotPassword)

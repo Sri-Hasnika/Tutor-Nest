@@ -170,8 +170,8 @@ const getBookedDemoRequests = async(req,res)=>{
 const addMeetLink = async(req,res)=>{
     try{
         const {tutorId,classId}=req.params;
-        const {meetLink}=req.body;
-        const updatedClass = await DemoRequest.findByIdAndUpdate(classId, { meetLink }, { new: true });
+        const {meetLink, finalDate}=req.body;
+        const updatedClass = await DemoRequest.findByIdAndUpdate(classId, { meetLink, finalDate }, { new: true });
         if (updatedClass) {
             res.status(200).json({ message: "Meet link added successfully", payload: updatedClass });
         }
