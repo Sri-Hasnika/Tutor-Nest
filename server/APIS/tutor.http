@@ -123,7 +123,7 @@ GET http://localhost:8000/tutor-api/filter?subject=Physics&state=CA&gender=male&
 GET http://localhost:8000/tutor-api/demo-class/6807b173c4b37b67886c9d24
 
 ### Add Meet Link to Demo Class
-PUT http://localhost:8000/tutor-api/demo-class/6807b173c4b37b67886c9d24/6807b62d4ee35db15e4580ae
+PUT http://localhost:8000/tutor-api/demo-class/6807b173c4b37b67886c9d24/6808bfd3a482be3e9c99ddec
 Content-Type: application/json
 
 {
