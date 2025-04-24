@@ -61,7 +61,7 @@ const loginTutor=expressAsyncHandler(async(req,res)=>{
         if(tutorLogin){
             const token=await generateToken(tutorLogin._id);
             console.log("token",token);
-            res.status(200).json({token});
+            res.status(200).json({token,tutorLogin});
         }else{
             res.status(401).json({message:"Invalid credentials"});
         }
