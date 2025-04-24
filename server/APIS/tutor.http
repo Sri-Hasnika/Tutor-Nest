@@ -63,7 +63,7 @@ Content-Type: application/json
 DELETE http://localhost:8000/tutor-api/tutor/67bf111efabfed3ccbc3e63b
 
 ### Tutor Login
-POST http://localhost:8000/tutor-api/tutor
+POST http://localhost:8000/tutor-api/login
 Content-Type: application/json
 
 {

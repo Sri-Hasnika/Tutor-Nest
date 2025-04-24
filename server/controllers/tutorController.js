@@ -56,11 +56,9 @@ const deleteTutor=expressAsyncHandler(async(req,res)=>{
 const loginTutor=expressAsyncHandler(async(req,res)=>{
     const {email,password}=req.body;
     try{
-        console.log("Entering")
         const tutorLogin=await validateTutor(email,password);
         if(tutorLogin){
             const token=await generateToken(tutorLogin._id);
-            console.log("token",token);
             res.status(200).json({token,tutorLogin});
         }else{
             res.status(401).json({message:"Invalid credentials"});
