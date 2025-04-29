@@ -136,6 +136,7 @@ const getBookedDemoClasses = async(req,res)=>{
     try {
         const {tuteeId}=req.params;
         console.log(tuteeId);
+        console.log("Entering");
         const bookedClasses=await DemoRequest.find({tuteeId}).populate('tutorId');
         if(bookedClasses.length>0){
             res.status(200).json({message:"Booked demo classes",payload:bookedClasses})
@@ -153,7 +154,10 @@ const getBookedDemoClasses = async(req,res)=>{
 const getBookedDemoRequests = async(req,res)=>{
     try {
         const {tutorId}=req.params;
+        console.log("Entering");
         const bookedClasses=await DemoRequest.find({tutorId}).populate('tuteeId');
+        console.log("passing");
+        console.log(bookedClasses);
         if(bookedClasses.length>0){
             res.status(200).json({message:"Booked demo classes",payload:bookedClasses})
         }
