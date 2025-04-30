@@ -39,8 +39,8 @@ const validateTutee=async(email,password)=>{
     }
     // console.log("password"+password);
      const isMatch= await bcrypt.compare(password,tuteeValid.password);
-     console.log("has")
-     console.log(isMatch)
+    //  console.log("has")
+    //  console.log(isMatch)
      if(!isMatch){
         throw new Error('invalid credentials');
      }
@@ -54,13 +54,13 @@ const validateTutor=async(email,password)=>{
         throw new Error("Email and password are required");
     }
     const tutorValid=await tutor.findOne({email})
-    console.log(tutorValid)
+    // console.log(tutorValid)
     if(!tutorValid){
         throw new Error('Invalid credentials');
     }
-    console.log("password:"+password);
+    // console.log("password:"+password);
 const isMatch=await bcrypt.compare(password,tutorValid.password);
-console.log(isMatch,'line-58-util')
+// console.log(isMatch,'line-58-util')
     if(!isMatch){
         throw new Error('line-60 -authUtil- invalid credentials');
     }

@@ -1,6 +1,6 @@
 const exp=require('express');
 const tutorApp=exp.Router();
-const {createTutor,getTutor,getTutorById,loginTutor,updateTutor,deleteTutor,forgotPassword,resetPasswordHandler,searchTutors,filterTutors}=require('../controllers/tutorController');
+const {createTutor,getTutor,getTutorById,loginTutor,assignTuteeToTutor,updateTutor,deleteTutor,forgotPassword,resetPasswordHandler,searchTutors,filterTutors, getAllTuteesByTutorId}=require('../controllers/tutorController');
 const { getBookedDemoRequests, addMeetLink } = require('../controllers/demoClassControler');
 // const {scheduleDemoClass, getDemoClasses, deleteDemoClass}=require('../controllers/demoClassControler');
 
@@ -36,8 +36,8 @@ tutorApp.get('/filter',filterTutors);
 tutorApp.get('/demo-class/:tutorId',getBookedDemoRequests);
 tutorApp.put('/demo-class/:tutorId/:classId', addMeetLink);
 
-
-
+tutorApp.get('/:tutorId/tutees',getAllTuteesByTutorId);
+tutorApp.put('/:tutorId/tutees/:tuteeId', assignTuteeToTutor);
 
 
 module.exports=tutorApp;

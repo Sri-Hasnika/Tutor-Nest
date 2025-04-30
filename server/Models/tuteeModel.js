@@ -69,6 +69,10 @@ password:{
 // tuteeId:{
 //     type:
 // }
+tutorId:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'tutor',
+},
 
 //reset and forgot password
 resetPasswordToken:{

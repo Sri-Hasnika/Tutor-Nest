@@ -3,23 +3,25 @@ const app=exp()
 const mongoose=require('mongoose')
 const tutorApp=require('./APIS/tutorApi')
 const TuteeApp=require('./APIS/tuteeApi');
+const sessionPlanApi= require('./APIS/sessionPlanApi');
+const progressApi= require('./APIS/progressApi');
+const path = require("path")
 const cors = require('cors')
-//using port from .env
+
 require('dotenv').config()
 const port=process.env.PORT||9000
 
-//cors 
-app.use(cors(
-    {
-        origin: "http://localhost:3000"
-    }
-))
+
+app.use(cors({origin: "http://localhost:3000"}))
 
 //user parser middleware
 app.use(exp.json())
 app.use('/tutor-api',tutorApp);
 app.use('/tutee-api',TuteeApp); 
+app.use('/sessionPlan-api', sessionPlanApi)
+app.use('/progress-api', progressApi);
 
+app.use("/uploads", exp.static(path.join(__dirname, "uploads")))
 
 //connection
 mongoose.connect(process.env.DBURL)

@@ -2,6 +2,7 @@ const expressAsyncHandler=require('express-async-handler');
 const tutor=require('../Models/tutorModel');
 const bcrypt=require('bcrypt');
 const {generateToken,validateTutor,generateResetToken,sendResetEmail,resetPassword}=require('../utils/authUtil');
+const tutee = require('../Models/tuteeModel');
 
 
 const createTutor=expressAsyncHandler(async(req,res)=>{
@@ -84,7 +85,7 @@ const forgotPassword = expressAsyncHandler(async (req, res) => {
         await sendResetEmail(email, token, user instanceof tutee ? "tutee" : "tutor");
         res.status(200).json({ message: "Password reset email sent" });
     } catch (error) {
-        console.error("Forgot Password Error:", error);
+        // console.error("Forgot Password Error:", error);
         res.status(500).json({ message: error.message });
     }
 });
@@ -162,6 +163,29 @@ const filterTutors = expressAsyncHandler(async (req, res) => {
     res.status(200).json({ message: "Filtered tutors", payload: filteredTutors });
 });
 
+const getAllTuteesByTutorId=expressAsyncHandler(async(req,res)=>{
+    const tutorId=req.params.tutorId;
+    // console.log(tutorId);
+    const tutees=await tutee.find({tutorId:tutorId});
+    // console.log(tutees);
+    if(tutees){
+        res.status(200).json({message:"Tutees found",payload:tutees});
+    }else{
+        res.status(404).json({message:"No tutees found"});
+    }
+})
+
+const assignTuteeToTutor=expressAsyncHandler(async(req,res)=>{
+    const {tutorId,tuteeId}=req.params;
+    // console.log("entering..")
+    const updatedTutee=await tutee.findByIdAndUpdate(tuteeId,{tutorId:tutorId},{new:true});
+    if(updatedTutee){
+        res.status(200).json({message:"Tutee assigned to tutor",payload:updatedTutee});
+    }else{
+        res.status(404).json({message:"Tutee not found"});
+    }
+})
+
 module.exports={
     getTutor,
     createTutor,
@@ -172,5 +196,7 @@ module.exports={
     resetPasswordHandler,
     forgotPassword,
     searchTutors,
-    filterTutors
+    filterTutors,
+    getAllTuteesByTutorId,
+    assignTuteeToTutor
 }
