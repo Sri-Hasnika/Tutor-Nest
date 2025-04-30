@@ -2,11 +2,6 @@ const SessionPlan = require("../../Models/sessionPlanModel");
 const tutee = require("../../Models/tuteeModel");
 const TuteeProgress = require("../../Models/tuteeProgressModel");
 
-/**
- * Retrieves progress data for a specific tutee
- * @param {Object} req - Express request object with tuteeId param
- * @param {Object} res - Express response object
- */
 const getTuteeProgress = async (req, res) => {
   try {
     const { tuteeId } = req.params;

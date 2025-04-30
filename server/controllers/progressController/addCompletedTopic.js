@@ -1,11 +1,6 @@
 const tutee = require("../../Models/tuteeModel");
 const TuteeProgress = require("../../Models/tuteeProgressModel");
 
-/**
- * Adds a new completed topic to a tutee's progress
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const addCompletedTopic = async (req, res) => {
   try {
     const { tuteeId, topicName } = req.body;
@@ -18,7 +13,6 @@ const addCompletedTopic = async (req, res) => {
       });
     }
 
-    // Validate tutee exists and belongs to this tutor
     const tuteeById = await tutee.findOne({ _id: tuteeId, tutorId: tutorId });
     if (!tuteeById) {
       return res.status(404).json({
@@ -27,13 +21,13 @@ const addCompletedTopic = async (req, res) => {
       });
     }
 
-    // Create the new topic object
+
     const newTopic = {
       topicName: topicName,
       completedDate: new Date()
     };
 
-    // Update progress document - add to completedTopics array
+
     const progress = await TuteeProgress.findOneAndUpdate(
       { tutorId, tuteeId },
       { 

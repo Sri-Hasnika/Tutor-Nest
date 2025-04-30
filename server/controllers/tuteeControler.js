@@ -39,9 +39,9 @@ const tuteeDetailsById=expressAsyncHandler(async(req,res)=>{
 //update tutee details
 const updateTutee=expressAsyncHandler(async(req,res)=>{
     const tuteeId=req.params.id;
-    console.log(tuteeId);
+    // console.log(tuteeId);
     const updatedTutee=await tutee.findByIdAndUpdate(tuteeId,req.body,{new:true});
-    console.log(updatedTutee)
+    // console.log(updatedTutee)
     if(updatedTutee){
         res.send({message:"Tutee updated",payload:updatedTutee});
     }else{

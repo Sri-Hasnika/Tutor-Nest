@@ -4,7 +4,7 @@ const SessionPlan = require("../Models/sessionPlanModel");
 // Create a new session plan
 const createSessionPlan = expressAsyncHandler(async (req, res) => {
   const { tutorId, tuteeId, topics, schedule, durationWeeks, additionalNotes,course } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
 
   // Validate input
   if (!tutorId || !tuteeId || !topics || !schedule || !durationWeeks) {
@@ -66,7 +66,7 @@ const getSessionPlanById = async(req,res)=>{
 const updateSessionPlan = expressAsyncHandler(async (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
-  console.log(updateData);
+  // console.log(updateData);
 
   try {
     const updatedPlan = await SessionPlan.findByIdAndUpdate(
@@ -74,7 +74,7 @@ const updateSessionPlan = expressAsyncHandler(async (req, res) => {
       updateData,
       { new: true }
     );
-    console.log(updatedPlan);
+    // console.log(updatedPlan);
     if (updatedPlan) {
       res.status(200).json({ message: "Session plan updated successfully", payload: updatedPlan });
     } else {

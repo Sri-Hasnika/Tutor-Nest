@@ -7,11 +7,6 @@ const SessionPlan = require("../../Models/sessionPlanModel")
 const TuteeProgress = require("../../Models/tuteeProgressModel")
 const tutee = require("../../Models/tuteeModel")
 
-/**
- * Generates an AI-enhanced PDF report of tutee's progress using Groq AI
- * @param {Object} req - Express request object
- * @param {Object} res - Express response object
- */
 const groqWithKey = createGroq({
     apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
 });
@@ -21,7 +16,6 @@ const generateReport = async (req, res) => {
     const { tuteeId } = req.params
     const tutorId = req.user._id
 
-    // Validate tutee exists and belongs to this tutor
     const tuteeData = await tutee
       .findOne({ _id: tuteeId, tutorId: tutorId })
       .select("firstName lastName email studying course")
@@ -33,14 +27,12 @@ const generateReport = async (req, res) => {
       })
     }
 
-    // Get session plan
     const sessionPlan = await SessionPlan.findOne({
       tutorId: tutorId,
       tuteeId: tuteeId,
       status: "active",
     })
 
-    // Get progress data
     const progress = await TuteeProgress.findOne({
       tutorId: tutorId,
       tuteeId: tuteeId,
@@ -53,7 +45,6 @@ const generateReport = async (req, res) => {
       })
     }
 
-    // Calculate progress metrics
     let progressMetrics = {}
     if (sessionPlan && sessionPlan.topics && sessionPlan.topics.length > 0) {
       const totalTopics = sessionPlan.topics.length
@@ -67,14 +58,13 @@ const generateReport = async (req, res) => {
       }
     }
 
-    // Get pending topics
+
     let pendingTopics = []
     if (sessionPlan && sessionPlan.topics) {
       const completedTopicNames = progress.completedTopics.map((t) => t.topicName)
       pendingTopics = sessionPlan.topics.filter((topic) => !completedTopicNames.includes(topic))
     }
 
-    // Prepare data for AI
     const aiData = {
       tuteeDetails: {
         name: `${tuteeData.firstName} ${tuteeData.lastName}`,
@@ -88,7 +78,6 @@ const generateReport = async (req, res) => {
       progressMetrics,
     }
 
-    // Generate AI-enhanced report content
     const { text: aiReport } = await generateText({
       model: groqWithKey("llama3-70b-8192"),
       prompt: `
@@ -110,34 +99,28 @@ const generateReport = async (req, res) => {
         3. Recommendations for approaching pending topics
         4. A conclusion with encouragement and next steps
         
-        Format the response with clear section headers that can be used in a PDF report.
+        Format the response with clear section headers that can be used in a PDF report. Remove the stars around the highlighting headers, sub-headers, and bullet points.
+        Use a professional tone and ensure the report is easy to read.
       `,
     })
 
-    // Parse AI response into sections
     const sections = parseAIResponse(aiReport)
 
-    // Create folder for reports if it doesn't exist
     const reportsDir = path.join(__dirname, "../../uploads/generated-reports")
     if (!fs.existsSync(reportsDir)) {
       fs.mkdirSync(reportsDir, { recursive: true })
     }
 
-    // Generate filename
     const filename = `progress_report_${tuteeData.firstName}_${tuteeData.lastName}_${Date.now()}.pdf`
     const filePath = path.join(reportsDir, filename)
 
-    // Create PDF document
     const doc = new PDFDocument()
     const stream = fs.createWriteStream(filePath)
     doc.pipe(stream)
 
-    // Add content to PDF
-    // Header
     doc.fontSize(25).text("Tutee Progress Report", { align: "center" })
     doc.moveDown()
 
-    // Tutee Details
     doc.fontSize(14).text("Tutee Details:", { underline: true })
     doc.fontSize(12).text(`Name: ${tuteeData.firstName} ${tuteeData.lastName}`)
     doc.fontSize(12).text(`Email: ${tuteeData.email}`)
@@ -145,7 +128,6 @@ const generateReport = async (req, res) => {
     doc.fontSize(12).text(`Grade/Class: ${tuteeData.studying}`)
     doc.moveDown()
 
-    // AI-generated content
     Object.entries(sections).forEach(([title, content]) => {
       if (title && content) {
         doc.fontSize(14).text(title, { underline: true })
@@ -154,7 +136,7 @@ const generateReport = async (req, res) => {
       }
     })
 
-    // Completed Topics
+
     doc.fontSize(14).text("Completed Topics:", { underline: true })
     if (progress.completedTopics && progress.completedTopics.length > 0) {
       progress.completedTopics.forEach((topic, index) => {
@@ -179,7 +161,6 @@ const generateReport = async (req, res) => {
       doc.moveDown()
     }
 
-    // Progress metrics
     if (progressMetrics.totalTopics) {
       doc.fontSize(14).text("Progress Summary:", { underline: true })
       doc.fontSize(12).text(`Total Topics: ${progressMetrics.totalTopics}`)
@@ -188,15 +169,13 @@ const generateReport = async (req, res) => {
       doc.moveDown()
     }
 
-    // Generate date
     doc.fontSize(10).text(`Report generated on: ${new Date().toLocaleDateString()}`, { align: "right" })
 
-    // Finalize the PDF and end the stream
     doc.end()
 
-    // Wait for the PDF to be fully written
+
     stream.on("finish", () => {
-      // Send the file path as a response
+
       return res.status(200).json({
         success: true,
         message: "AI-enhanced report generated successfully",
@@ -204,7 +183,6 @@ const generateReport = async (req, res) => {
       })
     })
 
-    // Handle stream errors
     stream.on("error", (err) => {
       console.error("Stream error:", err)
       return res.status(500).json({
@@ -223,28 +201,23 @@ const generateReport = async (req, res) => {
   }
 }
 
-/**
- * Parse AI response into sections
- * @param {string} aiResponse - The AI-generated report text
- * @returns {Object} - Object with section titles as keys and content as values
- */
 function parseAIResponse(aiResponse) {
   const sections = {}
 
-  // Simple parsing logic - can be enhanced based on AI output format
+
   const lines = aiResponse.split("\n")
   let currentSection = "Introduction"
   let currentContent = []
 
   for (const line of lines) {
-    // Check if line is a section header (simple heuristic)
+
     if (line.trim() && (line.includes(":") || /^[A-Z][\w\s]{2,25}$/.test(line.trim()))) {
-      // Save previous section
+
       if (currentContent.length > 0) {
         sections[currentSection] = currentContent.join("\n")
       }
 
-      // Start new section
+
       currentSection = line.trim()
       currentContent = []
     } else if (line.trim()) {
@@ -252,7 +225,6 @@ function parseAIResponse(aiResponse) {
     }
   }
 
-  // Save the last section
   if (currentContent.length > 0) {
     sections[currentSection] = currentContent.join("\n")
   }
