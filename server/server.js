@@ -5,6 +5,7 @@ const tutorApp=require('./APIS/tutorApi')
 const TuteeApp=require('./APIS/tuteeApi');
 const sessionPlanApi= require('./APIS/sessionPlanApi');
 const progressApi= require('./APIS/progressApi');
+const sessionApi= require('./APIS/sessionApi');
 const path = require("path")
 const cors = require('cors')
 
@@ -20,6 +21,7 @@ app.use('/tutor-api',tutorApp);
 app.use('/tutee-api',TuteeApp); 
 app.use('/sessionPlan-api', sessionPlanApi)
 app.use('/progress-api', progressApi);
+app.use('/session-api', sessionApi)
 
 app.use("/uploads", exp.static(path.join(__dirname, "uploads")))
 

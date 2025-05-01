@@ -1,3 +1,4 @@
+
 const expressAsyncHandler = require("express-async-handler");
 const SessionPlan = require("../Models/sessionPlanModel");
 
@@ -85,10 +86,62 @@ const updateSessionPlan = expressAsyncHandler(async (req, res) => {
   }
 });
 
+// Get all session plans for a tutor
+const getSessionPlansByTutor = expressAsyncHandler(async (req, res) => {
+  try {
+    const { tutorId } = req.params;
+
+    // Verify the authenticated tutor matches the requested tutorId
+    if (req.user._id.toString() !== tutorId) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized access to these session plans",
+      });
+    }
+
+    const sessionPlans = await SessionPlan.find({ tutorId, isActive: true });
+
+    return res.status(200).json({
+      success: true,
+      payload: sessionPlans,
+    });
+  } catch (error) {
+    console.error("Error fetching session plans:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch session plans",
+    });
+  }
+});
+
+// Get all session plans for a tutee
+const getSessionPlansByTutee = expressAsyncHandler(async (req, res) => {
+  try {
+    const { tuteeId } = req.params;
+
+    const sessionPlans = await SessionPlan.find({ tuteeId, isActive: true }).populate(
+      "tutorId",
+      "firstName lastName profileImage"
+    );
+
+    return res.status(200).json({
+      success: true,
+      payload: sessionPlans,
+    });
+  } catch (error) {
+    console.error("Error fetching session plans:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch session plans",
+    });
+  }
+});
 
 module.exports = {
   createSessionPlan,
   getSessionPlans,
   updateSessionPlan,
-  getSessionPlanById
+  getSessionPlanById,
+  getSessionPlansByTutor,
+  getSessionPlansByTutee
 };

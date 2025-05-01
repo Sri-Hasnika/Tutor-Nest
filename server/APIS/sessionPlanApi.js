@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const {
+  getSessionPlanById,
   createSessionPlan,
   getSessionPlans,
-  updateSessionPlan,
-  getSessionPlanById
+  updateSessionPlan
 } = require("../controllers/sessionPlanController");
 
 // Route to create a new session plan
