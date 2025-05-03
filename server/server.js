@@ -13,8 +13,7 @@ require('dotenv').config()
 const port=process.env.PORT||9000
 
 
-app.use(cors({origin: "http://localhost:3000"}))
-
+app.use(cors({origin: "https://tutor-nest-three.vercel.app/" }))
 //user parser middleware
 app.use(exp.json())
 app.use('/tutor-api',tutorApp);
