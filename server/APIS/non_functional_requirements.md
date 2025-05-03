@@ -1,5 +1,5 @@
 # Non-Functional Requirements for Tutor Application
-
+Tutor Nest is a platform connecting students to the tutors
 ## Performance
 - The application should handle at least 100 concurrent users without performance degradation.
 - Response time for API requests should be under 200 milliseconds.
@@ -21,3 +21,4 @@
 ## Maintainability
 - Code should be well-documented and follow best practices for readability.
 - Implement automated testing to ensure code quality and facilitate future changes.
+
